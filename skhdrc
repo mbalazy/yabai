@@ -10,6 +10,10 @@ fn + lalt - 3 : "${HOME}"/.config/yabai/scripts/show_bat.sh
 fn + lalt - 4 : "${HOME}"/.config/yabai/scripts/show_disk.sh
 fn + lalt - 5 : "${HOME}"/.config/yabai/scripts/show_song.sh
 
+# Moving spaces
+alt + cmd - l : yabai -m space --focus next
+alt + cmd - h : yabai -m space --focus prev
+
 # Navigation hjkl
 cmd - h : yabai -m window --focus prev || yabai -m window --focus last
 cmd - j : yabai -m window --focus south
@@ -122,7 +126,7 @@ shift + lctrl + alt - r : \
     launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
 # create desktop and follow focus - uses jq for parsing json (brew install jq)
-cmd + lctrl - n : yabai -m space --create && \
+cmd + alt - n : yabai -m space --create && \
                    index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
                    yabai -m space --focus "${index}" \
                    # yabai -m window --space "${index}" && \
