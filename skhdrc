@@ -4,6 +4,7 @@
 cmd - return : open -n /Applications/Alacritty.app
 cmd + shift - return : open -n /Applications/Brave\ Browser.app
 cmd + alt - m : open /System/Applications/Messages.app
+cmd + alt - f : open /System/Library/CoreServices/Finder.app
 
 # Switching spaces
 alt + cmd - l : yabai -m space --focus next || yabai -m space --focus first
@@ -11,10 +12,10 @@ alt + cmd - h : yabai -m space --focus prev || yabai -m space --focus last
 
 # Moving spaces
 alt + cmd + lctrl - h : yabai -m space --move prev && \
-  echo "refresh" | nc -U /tmp/yabai-indicator.socket
+  sketchybar --trigger space_change
 
 alt + cmd + lctrl - l : yabai -m space --move next && \
-  echo "refresh" | nc -U /tmp/yabai-indicator.socket
+  sketchybar --trigger space_change
 
 # Navigation windows in space hjkl
 lalt - h : yabai -m window --focus prev || yabai -m window --focus last
@@ -100,26 +101,27 @@ shift + alt - space : \
     yabai -m window --toggle float; \
     yabai -m window --toggle border
 
+
+# shift + lctrl + alt - r : launchctl kickstart -k "gui/$UID/homebrew.mxcl.yabai"
 # Restart Yabai
-shift + lctrl + alt - r : \
-    /usr/bin/env osascript <<< \
-        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+shift + lctrl + alt - r : bash -c 'launchctl kickstart -k "gui/$UID/homebrew.mxcl.yabai"'
 
 # Destroy space.
 cmd + alt - w : yabai -m space --destroy
 
-# create space
+# create new space
 cmd + alt - n : yabai -m space --create && \
-                   index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
-                   yabai -m space --focus "${index}" && \
-                   echo "refresh" | nc -U /tmp/yabai-indicator.socket
+                   set index "$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+                   yabai -m space --focus "$index"
+                   # echo "refresh" | nc -U /tmp/yabai-indicator.socket
                    
 cmd + lctrl + lalt - n : yabai -m space --create && \
-                   index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
-                   yabai -m window --space "${index}" && \
-                   yabai -m space --focus "${index}" && \
+                   set index "$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+                   yabai -m window --space "$index" && \
+                   yabai -m space --focus "$index" && \
                    echo "refresh" | nc -U /tmp/yabai-indicator.socket
+
+rcmd + ralt - s : sketchybar --reload
 
 # Make window native fullscreen
 alt - f         : yabai -m window --toggle zoom-fullscreen
