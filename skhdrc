@@ -5,6 +5,7 @@ cmd - return : open -n /Applications/Alacritty.app
 cmd + shift - return : open -n /Applications/Brave\ Browser.app
 cmd + alt - m : open /System/Applications/Messages.app
 cmd + alt - f : open /System/Library/CoreServices/Finder.app
+cmd + alt - p : open /System/Library/PreferencePanes/Appearance.prefPane
 
 # Switching spaces
 alt + cmd - l : yabai -m space --focus next || yabai -m space --focus first

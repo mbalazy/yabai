@@ -79,6 +79,11 @@ yabai -m rule --add label="macfeh" app="^macfeh$" manage=off
 yabai -m rule --add label="Vimari" app="^Vimari$" manage=off
 yabai -m rule --add app="^DaisyDisk$" manage=off
 yabai -m rule --add app="^Messages$" manage=off
+yabai -m rule --add app="^Preview$" manage=off
+yabai -m rule --add app="^Photos$" manage=off
+yabai -m rule --add app="^Disk Utility$" manage=off
+yabai -m rule --add app="^Docker Desktop$" manage=off
+yabai -m rule --add app="^Notes$" manage=offPhotos
 yabai -m rule --add app="^1Password$" manage=off
 yabai -m rule --add app="^Stats$" manage=off
 yabai -m rule --add label="Mail" app="^Mail$" manage=off
